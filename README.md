@@ -19,7 +19,7 @@ This is necessary for `css-loader` to work, since it requires a helper module.
 
 ### Examples
 
-All `.js` files: `extricate?resolve=%5C.js%24` (`encodeURIComponent('\\.js$')`
+All `.js` files: `extricate?resolve=\\.js$`
 
 ## Example Usage
 
@@ -31,7 +31,7 @@ module.exports = {
     loaders: [
       { test: /\.json$/, loaders: ['file?name=[name].[ext]', 'extricate', 'interpolate'] },
       { test: /\.js$/, loader: 'entry' },
-      { test: /\.css$/, loaders: ['file', 'extricate?resolve=%5C.js%24', 'css'] },
+      { test: /\.css$/, loaders: ['file', 'extricate?resolve=\\.js$', 'css'] },
       { test: /\.png$/, loader: 'file' }
     ]
   }
