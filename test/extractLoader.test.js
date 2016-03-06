@@ -93,7 +93,7 @@ describe("extractLoader", () => {
             expect(mainEntryJs).to.be.a.file();
             expect(noNativeRequireHtml).to.have.content.that.match(/<script src="main\.entry-dist\.js"><\/script>/);
         })
-    )
+    );
     it("should track all dependencies", () =>
         compile({ testModule: "stylesheet.html" }).then((stats) => {
             const basePath = path.dirname(__dirname); // returns the parent dirname

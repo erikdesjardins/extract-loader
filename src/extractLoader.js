@@ -35,9 +35,11 @@ function extractLoader(content) {
     });
     const { resolve: resolveQuery } = parseQuery(this.query);
     let nodeRequireRegex;
+
     if (resolveQuery) {
-        nodeRequireRegex = new RegExp(resolveQuery, 'i');
+        nodeRequireRegex = new RegExp(resolveQuery, "i");
     }
+
     const sandbox = {
         require: (resourcePath) => {
             const absPath = path.resolve(path.dirname(this.resourcePath), resourcePath);

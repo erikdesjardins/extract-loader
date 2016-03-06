@@ -33,10 +33,10 @@ export default function ({ testModule, publicPath }) {
                         test: /\.html$/,
                         loaders: [
                             "file?name=[name]-dist.[ext]",
-                            path.resolve(__dirname, "../../lib/extractLoader.js") + '?' + JSON.stringify({
+                            path.resolve(__dirname, "../../lib/extractLoader.js") + "?" + JSON.stringify({
                                 // nonsense that should never match, ensures that merely the existence of regex
                                 // is not enough to cause the usage of Node's native `require()`
-                                resolve: '$^foobar^$'
+                                resolve: "$^foobar^$"
                             }),
                             "html?" + JSON.stringify({
                                 attrs: ["img:src", "link:href", "script:src"]
@@ -47,8 +47,8 @@ export default function ({ testModule, publicPath }) {
                         test: /\.css$/,
                         loaders: [
                             "file?name=[name]-dist.[ext]",
-                            path.resolve(__dirname, "../../lib/extractLoader.js") + '?' + JSON.stringify({
-                                resolve: '\\.js$'
+                            path.resolve(__dirname, "../../lib/extractLoader.js") + "?" + JSON.stringify({
+                                resolve: "\\.js$"
                             }),
                             "css"
                         ]
