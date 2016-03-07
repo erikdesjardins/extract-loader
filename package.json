@@ -1,6 +1,6 @@
 {
   "name": "extricate-loader",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "Webpack loader to extract content from the bundle.",
   "main": "lib/extractLoader.js",
   "scripts": {
