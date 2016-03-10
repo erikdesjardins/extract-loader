@@ -13,6 +13,11 @@ after_success:
   - npm install coveralls
   - npm run coverage && cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js && rm -rf ./coverage
 
+branches:
+  only:
+    - master
+    - /^v[0-9]/
+
 deploy:
   provider: npm
   email: 'public@erikdesjardins.io'
