@@ -2,30 +2,9 @@ const vm = require("vm");
 const path = require("path");
 const loaderUtils = require("loader-utils");
 
-/**
- * @name LoaderContext
- * @property {function} cacheable
- * @property {function} async
- * @property {function} addDependency
- * @property {function} loadModule
- * @property {string} resourcePath
- * @property {object} options
- * @property {object} query
- */
-
-/**
- * Random placeholder. Marks the location in the source code where the result of other modules should be inserted.
- * @type {string}
- */
 const rndPlaceholder = "__EXTRICATE_LOADER_PLACEHOLDER_" + String(Math.random()).slice(2) + "__";
 
-/**
- * Executes the given module's src in a fake context in order to get the resulting string.
- *
- * @this LoaderContext
- * @throws Error
- * @param {string} content the module's src
- */
+// Executes the given module's src in a fake context in order to get the resulting string.
 function extricateLoader(content) {
     const callback = this.async();
 
@@ -70,10 +49,8 @@ function extricateLoader(content) {
         );
 }
 
-/**
- * Executes the given CommonJS module in a fake context to get the exported string. The given module is expected to
- * just return a string without requiring further modules.
- */
+// Executes the given CommonJS module in a fake context to get the exported string.
+// The given module is expected to just return a string without requiring further modules.
 function runScript(src, filename, context) {
     const script = new vm.Script(src, {
         filename: filename,
