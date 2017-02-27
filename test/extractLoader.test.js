@@ -126,4 +126,12 @@ describe('extricateLoader', () => {
             }
         )
     );
+    it('should error when importing a module with syntax errors', () =>
+        compile({ testModule: 'importError.js' }).then(
+            () => { throw new Error('Did not throw expected error'); },
+            message => {
+                expect(message).to.match(/SyntaxError: Unexpected identifier/);
+            }
+        )
+    );
 });
