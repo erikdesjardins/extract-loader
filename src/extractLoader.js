@@ -106,6 +106,4 @@ function runModule(src, filename, publicPath = "") {
     return sandbox.module.exports.toString();
 }
 
-// For CommonJS interoperability
 module.exports = extractLoader;
-export default extractLoader;
