@@ -2,7 +2,7 @@ const vm = require("vm");
 const path = require("path");
 const loaderUtils = require("loader-utils");
 
-const rndPlaceholder = "__EXTRICATE_LOADER_PLACEHOLDER_" + String(Math.random()).slice(2) + "__";
+const placeholder = "__EXTRICATE_LOADER_PLACEHOLDER_" + String(Math.random()).slice(2) + "__";
 
 // Executes the given module's src in a fake context in order to get the resulting string.
 function extricateLoader(content) {
@@ -36,13 +36,13 @@ function extricateLoader(content) {
                         }
                     });
                 }));
-                return rndPlaceholder;
+                return placeholder;
             }
         }
     });
 
     Promise.all(dependencies)
-        .then(results => rootModule.replace(new RegExp(rndPlaceholder, "g"), () => results.shift()))
+        .then(results => rootModule.replace(new RegExp(placeholder, "g"), () => results.shift()))
         .then(
             content => callback(null, content),
             err => callback(err)
