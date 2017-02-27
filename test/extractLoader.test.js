@@ -134,4 +134,12 @@ describe('extricateLoader', () => {
             }
         )
     );
+    it('should error when importing a module that throws', () =>
+        compile({ testModule: 'importThrows.js' }).then(
+            () => { throw new Error('Did not throw expected error'); },
+            message => {
+                expect(message).to.match(/Error: foo/);
+            }
+        )
+    );
 });
