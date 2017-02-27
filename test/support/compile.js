@@ -60,7 +60,13 @@ module.exports = function ({ testModule, publicPath }) {
                 ]
             }
         }, (err, stats) => {
-            err ? reject(err) : resolve(stats);
+            if (err) {
+                reject(err);
+            } else if (stats.hasErrors()) {
+                reject(stats.toJson().errors[0]);
+            } else {
+                resolve(stats);
+            }
         });
     });
 }
