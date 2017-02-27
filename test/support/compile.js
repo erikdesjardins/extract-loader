@@ -1,7 +1,7 @@
-import webpack from "webpack";
-import path from "path";
+const webpack = require("webpack");
+const path = require("path");
 
-export default function ({ testModule, publicPath }) {
+module.exports = function ({ testModule, publicPath }) {
     return new Promise((resolve, reject) => {
         webpack({
             entry: path.join(__dirname, "../modules", testModule),

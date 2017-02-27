@@ -1,6 +1,6 @@
-import vm from "vm";
-import path from "path";
-import loaderUtils from "loader-utils";
+const vm = require("vm");
+const path = require("path");
+const loaderUtils = require("loader-utils");
 
 /**
  * @name LoaderContext
@@ -98,7 +98,7 @@ function runModule(src, filename, publicPath = "") {
     });
     const sandbox = {
         module: {},
-        __webpack_public_path__: publicPath // eslint-disable-line camelcase
+        __webpack_public_path__: publicPath
     };
 
     script.runInNewContext(sandbox);

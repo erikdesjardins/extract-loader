@@ -1,11 +1,12 @@
-import path from "path";
-import fs from "fs";
-import rimRaf from "rimraf";
-import chai, { expect } from "chai";
-import chaiFs from "chai-fs";
-import compile from "./support/compile";
+const path = require("path");
+const fs = require("fs");
+const rimRaf = require("rimraf");
+const chai = require("chai");
+const { expect } = chai;
+const chaiFs = require("chai-fs");
+const compile = require("./support/compile");
 
-import "./support/unhandledRejection";
+require("./support/unhandledRejection");
 
 chai.use(chaiFs);
 
