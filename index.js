@@ -28,15 +28,12 @@ const rndPlaceholder = "__EXTRICATE_LOADER_PLACEHOLDER_" + String(Math.random())
  */
 function extricateLoader(content) {
     const callback = this.async();
-    const dependencies = [];
-    const script = new vm.Script(content, {
-        filename: this.resourcePath,
-        displayErrors: true
-    });
+
     const query = loaderUtils.getOptions(this) || {};
     const nodeRequireRegex = query.resolve && new RegExp(query.resolve, "i");
 
-    const sandbox = {
+    const dependencies = [];
+    const rootModule = runScript(content, this.resourcePath, {
         require: (resourcePath) => {
             const absPath = path.resolve(path.dirname(this.resourcePath), resourcePath);
 
@@ -48,22 +45,12 @@ function extricateLoader(content) {
             dependencies.push(resourcePath);
 
             return rndPlaceholder;
-        },
-        module: {},
-        exports: {}
-    };
-
-    sandbox.module.exports = sandbox.exports;
-    script.runInNewContext(sandbox);
+        }
+    });
 
     Promise.all(dependencies.map(loadModule, this))
-        .then(sources => sources.map(
-            // runModule may throw an error, so it's important that our promise is rejected in this case
-            (src, i) => runModule(src, dependencies[i], this.options.output.publicPath)
-        ))
-        .then(results => sandbox.module.exports.toString()
-            .replace(new RegExp(rndPlaceholder, "g"), () => results.shift())
-        )
+        .then(sources => sources.map((src, i) => runScript(src, dependencies[i], { __webpack_public_path__: this.options.output.publicPath || '' })))
+        .then(results => rootModule.replace(new RegExp(rndPlaceholder, "g"), () => results.shift()))
         .then(content => callback(null, content))
         .catch(callback);
 }
@@ -84,22 +71,18 @@ function loadModule(request) {
 /**
  * Executes the given CommonJS module in a fake context to get the exported string. The given module is expected to
  * just return a string without requiring further modules.
- *
- * @throws Error
- * @param {string} src
- * @param {string} filename
- * @param {string} [publicPath]
- * @returns {string}
  */
-function runModule(src, filename, publicPath = "") {
+function runScript(src, filename, context) {
     const script = new vm.Script(src, {
-        filename,
+        filename: filename,
         displayErrors: true
     });
-    const sandbox = {
+
+    const sandbox = Object.assign({
         module: {},
-        __webpack_public_path__: publicPath
-    };
+        exports: {},
+    }, context);
+    sandbox.module.exports = sandbox.exports;
 
     script.runInNewContext(sandbox);
 
