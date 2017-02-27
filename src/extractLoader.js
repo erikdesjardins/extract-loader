@@ -1,6 +1,6 @@
 import vm from "vm";
 import path from "path";
-import { parseQuery } from "loader-utils";
+import loaderUtils from "loader-utils";
 
 /**
  * @name LoaderContext
@@ -33,12 +33,8 @@ function extractLoader(content) {
         filename: this.resourcePath,
         displayErrors: true
     });
-    const { resolve: resolveQuery } = parseQuery(this.query);
-    let nodeRequireRegex;
-
-    if (resolveQuery) {
-        nodeRequireRegex = new RegExp(resolveQuery, "i");
-    }
+    const query = loaderUtils.getOptions(this) || {};
+    const nodeRequireRegex = query.resolve && new RegExp(query.resolve, "i");
 
     const sandbox = {
         require: (resourcePath) => {

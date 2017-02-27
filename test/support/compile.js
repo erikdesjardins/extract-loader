@@ -2,60 +2,58 @@ import webpack from "webpack";
 import path from "path";
 
 export default function ({ testModule, publicPath }) {
-    const testModulePath = path.resolve(__dirname, "../modules/", testModule);
-
     return new Promise((resolve, reject) => {
         webpack({
-            entry: testModulePath,
+            entry: path.join(__dirname, "../modules", testModule),
             bail: true, // report build errors to our test
             output: {
-                path: path.resolve(__dirname, "../dist"),
+                path: path.join(__dirname, "../dist"),
                 filename: "bundle.js",
                 publicPath
             },
             module: {
-                loaders: [
+                rules: [
                     {
                         test: /\.entry\.js$/,
-                        loaders: [
-                            "file?name=[name]-dist.[ext]"
+                        use: [
+                            { loader: "file-loader", options: { name: "[name]-dist.[ext]" } }
                         ]
                     },
                     {
                         test: /\.js$/,
-                        loaders: [
+                        use: [
                             // appending -dist so we can check if url rewriting is working
-                            "file?name=[name]-dist.[ext]",
-                            path.resolve(__dirname, "../../lib/extractLoader.js")
+                            { loader: "file-loader", options: { name: "[name]-dist.[ext]" } },
+                            { loader: path.join(__dirname, "../../lib/extractLoader.js") },
                         ]
                     },
                     {
                         test: /\.html$/,
-                        loaders: [
-                            "file?name=[name]-dist.[ext]",
-                            path.resolve(__dirname, "../../lib/extractLoader.js") + "?" + JSON.stringify({
+                        use: [
+                            { loader: "file-loader", options: { name: "[name]-dist.[ext]" } },
+                            { loader: path.join(__dirname, "../../lib/extractLoader.js"), options: {
                                 // nonsense that should never match, ensures that merely the existence of regex
                                 // is not enough to cause the usage of Node's native `require()`
                                 resolve: "$^foobar^$"
-                            }),
-                            "html?" + JSON.stringify({
-                                attrs: ["img:src", "link:href", "script:src"]
-                            })
+                            } },
+                            { loader: "html-loader", options: { attrs: ["img:src", "link:href", "script:src"] } }
                         ]
                     },
                     {
                         test: /\.css$/,
-                        loaders: [
-                            "file?name=[name]-dist.[ext]",
-                            path.resolve(__dirname, "../../lib/extractLoader.js") + "?" + JSON.stringify({
+                        use: [
+                            { loader: "file-loader", options: { name: "[name]-dist.[ext]" } },
+                            { loader: path.join(__dirname, "../../lib/extractLoader.js"), options: {
                                 resolve: "\\.js$"
-                            }),
-                            "css"
+                            } },
+                            { loader: "css-loader" }
                         ]
                     },
                     {
                         test: /\.jpg$/,
-                        loader: "file?name=[name]-dist.[ext]"
+                        use: [
+                            { loader: "file-loader", options: { name: "[name]-dist.[ext]" } }
+                        ]
                     }
                 ]
             }
