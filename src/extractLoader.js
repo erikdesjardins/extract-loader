@@ -17,7 +17,7 @@ import loaderUtils from "loader-utils";
  * Random placeholder. Marks the location in the source code where the result of other modules should be inserted.
  * @type {string}
  */
-const rndPlaceholder = "__EXTRACT_LOADER_PLACEHOLDER__" + rndNumber() + rndNumber();
+const rndPlaceholder = "__EXTRACT_LOADER_PLACEHOLDER_" + String(Math.random()).slice(2) + "__";
 
 /**
  * Executes the given module's src in a fake context in order to get the resulting string.
@@ -104,13 +104,6 @@ function runModule(src, filename, publicPath = "") {
     script.runInNewContext(sandbox);
 
     return sandbox.module.exports.toString();
-}
-
-/**
- * @returns {string}
- */
-function rndNumber() {
-    return Math.random().toString().slice(2);
 }
 
 // For CommonJS interoperability
