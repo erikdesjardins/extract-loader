@@ -25,7 +25,9 @@ function extricateLoader(content) {
                 dependencies.push(new Promise(function(resolve, reject) {
                     // load the module with webpack's internal module loader
                     this.loadModule(resourcePath, function(err, src) {
-                        if (err) return reject(err);
+                        if (err) {
+                            return reject(err);
+                        }
                         try {
                             // run the imported module to get its (string) export
                             var result = runScript(src, resourcePath, {
@@ -37,6 +39,7 @@ function extricateLoader(content) {
                         }
                     }.bind(this));
                 }.bind(this)));
+
                 return placeholder;
             }
         }.bind(this)
