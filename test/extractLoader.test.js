@@ -102,7 +102,6 @@ describe('extricateLoader', () => {
             );
 
             expect(dependencies.sort()).to.eql([
-                '/node_modules/css-loader/lib/css-base.js',
                 '/test/modules/hi.jpg',
                 '/test/modules/img.css',
                 '/test/modules/stylesheet.html'
