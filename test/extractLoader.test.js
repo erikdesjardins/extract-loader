@@ -2,7 +2,7 @@ const path = require('path');
 const fs = require('fs');
 const rimRaf = require('rimraf');
 const chai = require('chai');
-const { expect } = chai;
+const expect = chai.expect;
 const chaiFs = require('chai-fs');
 const compile = require('./support/compile');
 

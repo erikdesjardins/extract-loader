@@ -3,7 +3,9 @@ const path = require('path');
 
 const extricateLoader = path.join(__dirname, '../../index.js');
 
-module.exports = function ({ testModule, publicPath }) {
+module.exports = function(opts) {
+    const testModule = opts.testModule;
+    const publicPath = opts.publicPath;
     return new Promise((resolve, reject) => {
         webpack({
             entry: path.join(__dirname, '../modules', testModule),
@@ -11,7 +13,7 @@ module.exports = function ({ testModule, publicPath }) {
             output: {
                 path: path.join(__dirname, '../dist'),
                 filename: 'bundle.js',
-                publicPath
+                publicPath: publicPath
             },
             module: {
                 rules: [
