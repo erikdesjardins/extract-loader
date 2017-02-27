@@ -1,16 +1,16 @@
-const webpack = require("webpack");
-const path = require("path");
+const webpack = require('webpack');
+const path = require('path');
 
-const extricateLoader = path.join(__dirname, "../../index.js");
+const extricateLoader = path.join(__dirname, '../../index.js');
 
 module.exports = function ({ testModule, publicPath }) {
     return new Promise((resolve, reject) => {
         webpack({
-            entry: path.join(__dirname, "../modules", testModule),
+            entry: path.join(__dirname, '../modules', testModule),
             bail: true, // report build errors to our test
             output: {
-                path: path.join(__dirname, "../dist"),
-                filename: "bundle.js",
+                path: path.join(__dirname, '../dist'),
+                filename: 'bundle.js',
                 publicPath
             },
             module: {
@@ -18,43 +18,43 @@ module.exports = function ({ testModule, publicPath }) {
                     {
                         test: /\.entry\.js$/,
                         use: [
-                            { loader: "file-loader", options: { name: "[name]-dist.[ext]" } }
+                            { loader: 'file-loader', options: { name: '[name]-dist.[ext]' } }
                         ]
                     },
                     {
                         test: /\.js$/,
                         use: [
                             // appending -dist so we can check if url rewriting is working
-                            { loader: "file-loader", options: { name: "[name]-dist.[ext]" } },
+                            { loader: 'file-loader', options: { name: '[name]-dist.[ext]' } },
                             { loader: extricateLoader },
                         ]
                     },
                     {
                         test: /\.html$/,
                         use: [
-                            { loader: "file-loader", options: { name: "[name]-dist.[ext]" } },
+                            { loader: 'file-loader', options: { name: '[name]-dist.[ext]' } },
                             { loader: extricateLoader, options: {
                                 // nonsense that should never match, ensures that merely the existence of regex
                                 // is not enough to cause the usage of Node's native `require()`
-                                resolve: "$^foobar^$"
+                                resolve: '$^foobar^$'
                             } },
-                            { loader: "html-loader", options: { attrs: ["img:src", "link:href", "script:src"] } }
+                            { loader: 'html-loader', options: { attrs: ['img:src', 'link:href', 'script:src'] } }
                         ]
                     },
                     {
                         test: /\.css$/,
                         use: [
-                            { loader: "file-loader", options: { name: "[name]-dist.[ext]" } },
+                            { loader: 'file-loader', options: { name: '[name]-dist.[ext]' } },
                             { loader: extricateLoader, options: {
-                                resolve: "\\.js$"
+                                resolve: '\\.js$'
                             } },
-                            { loader: "css-loader" }
+                            { loader: 'css-loader' }
                         ]
                     },
                     {
                         test: /\.jpg$/,
                         use: [
-                            { loader: "file-loader", options: { name: "[name]-dist.[ext]" } }
+                            { loader: 'file-loader', options: { name: '[name]-dist.[ext]' } }
                         ]
                     }
                 ]

@@ -1,15 +1,15 @@
-const vm = require("vm");
-const path = require("path");
-const loaderUtils = require("loader-utils");
+const vm = require('vm');
+const path = require('path');
+const loaderUtils = require('loader-utils');
 
-const placeholder = "__EXTRICATE_LOADER_PLACEHOLDER_" + String(Math.random()).slice(2) + "__";
+const placeholder = '__EXTRICATE_LOADER_PLACEHOLDER_' + String(Math.random()).slice(2) + '__';
 
 // Executes the given module's src in a fake context in order to get the resulting string.
 function extricateLoader(content) {
     const callback = this.async();
 
     const query = loaderUtils.getOptions(this) || {};
-    const nodeRequireRegex = query.resolve && new RegExp(query.resolve, "i");
+    const nodeRequireRegex = query.resolve && new RegExp(query.resolve, 'i');
 
     const dependencies = [];
     const rootModule = runScript(content, this.resourcePath, {
@@ -42,7 +42,7 @@ function extricateLoader(content) {
     });
 
     Promise.all(dependencies)
-        .then(results => rootModule.replace(new RegExp(placeholder, "g"), () => results.shift()))
+        .then(results => rootModule.replace(new RegExp(placeholder, 'g'), () => results.shift()))
         .then(
             content => callback(null, content),
             err => callback(err)
