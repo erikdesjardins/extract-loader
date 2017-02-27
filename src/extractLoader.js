@@ -40,9 +40,6 @@ function extractLoader(content) {
         require: (resourcePath) => {
             const absPath = path.resolve(path.dirname(this.resourcePath), resourcePath);
 
-            // Mark the file as dependency so webpack's watcher is working
-            this.addDependency(absPath);
-
             // If the required file matches the query, we just evaluate it with node's require
             if (nodeRequireRegex && nodeRequireRegex.test(resourcePath)) {
                 return require(absPath);
