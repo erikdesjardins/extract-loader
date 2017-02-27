@@ -56,8 +56,6 @@ function extractLoader(content) {
         exports: {}
     };
 
-    this.cacheable();
-
     sandbox.module.exports = sandbox.exports;
     script.runInNewContext(sandbox);
 
