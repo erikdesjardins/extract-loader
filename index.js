@@ -35,37 +35,39 @@ function extricateLoader(content) {
     const dependencies = [];
     const rootModule = runScript(content, this.resourcePath, {
         require: (resourcePath) => {
-            const absPath = path.resolve(path.dirname(this.resourcePath), resourcePath);
-
-            // If the required file matches the query, we just evaluate it with node's require
             if (nodeRequireRegex && nodeRequireRegex.test(resourcePath)) {
+                // evaluate the required file with node's require
+                const absPath = path.resolve(path.dirname(this.resourcePath), resourcePath);
                 return require(absPath);
+            } else {
+                // evaluate the required file with webpack's require, interpolate the result later
+                dependencies.push(new Promise((resolve, reject) => {
+                    this.loadModule(resourcePath, (err, src) => {
+                        if (err) {
+                            reject(err);
+                        } else {
+                            try {
+                                const result = runScript(src, resourcePath, {
+                                    __webpack_public_path__: this.options.output.publicPath || ''
+                                });
+                                resolve(result);
+                            } catch (e) {
+                                reject(e);
+                            }
+                        }
+                    });
+                }));
+                return rndPlaceholder;
             }
-
-            dependencies.push(resourcePath);
-
-            return rndPlaceholder;
         }
     });
 
-    Promise.all(dependencies.map(loadModule, this))
-        .then(sources => sources.map((src, i) => runScript(src, dependencies[i], { __webpack_public_path__: this.options.output.publicPath || '' })))
+    Promise.all(dependencies)
         .then(results => rootModule.replace(new RegExp(rndPlaceholder, "g"), () => results.shift()))
-        .then(content => callback(null, content))
-        .catch(callback);
-}
-
-/**
- * Loads the given module with webpack's internal module loader and returns the source code.
- *
- * @this LoaderContext
- * @param {string} request
- * @returns {Promise<string>}
- */
-function loadModule(request) {
-    return new Promise((resolve, reject) => {
-        this.loadModule(request, (err, src) => err ? reject(err) : resolve(src));
-    });
+        .then(
+            content => callback(null, content),
+            err => callback(err)
+        );
 }
 
 /**
