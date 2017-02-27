@@ -3,13 +3,14 @@ node_js:
   - 7
   - 6
   - 4
-
+branches:
+  only:
+    - master
+    - /^v[0-9]/
 script:
   - nyc npm test
-
 after_success:
   - './node_modules/.bin/nyc report --reporter=text-lcov | ./node_modules/.bin/coveralls'
-
 deploy:
   provider: npm
   email: 'public@erikdesjardins.io'
