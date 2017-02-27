@@ -1,10 +1,8 @@
-os:
-  - linux
 language: node_js
 node_js:
-  - "0.12"
-  - "4"
-  - "5"
+  - 7
+  - 6
+  - 4
 
 script:
   - npm test
@@ -20,4 +18,4 @@ deploy:
     secure: x1uVNa6kJGB6o1aSkAHWJNxqyRUkdI7GZzf++mcK071F+SIXfzah+4sHECBiUAjxRtK1n7g/DXgeoovRKgbUh3CNWWi5FH2exjmKbbde1gQ5fdjnbfinZIdHIoLiEdm6sF32PVpYdUaImBy7xddrJaTQhqb5lHuN6N8I6b/UtAKg4TufVLyTC8EGmVWh6oAqazydKdRdW2Pu2uilbc/rE0gQWyUACMYEXpWGWmq0fmxNjGbo7MQG/4sbWm+zBpys0wp3Ku5NTrN+agNey3cV2mSLxxBwElDD8uGMJXHWVZiOz70rILKCEvTHTVqKhwt0xS4nd6W3Brsc8U2VQw9bq8q4V8zYUBgAgM4/MTTsOCIf5S4ONuMpuSq0JwQWDN/O7EmzKySvY7Y9ks9WyQxDd95AVUGvnpz8/xPyZmV33BLZKB5P4u24+Ri+sT0ikwSWlzxAtjOnkS8zhmPglYdukmqkDOk0s7CvOvb+oole1njkmlSqWjCc5l/rCp6u8iUTX192MlRmKo35GjfWagNGB9cAaNHwAKY0h+WLw7GsZEQEuSoujRlqUKCCY1bq3kmRc0rh6+2y5CScBb1ndjn8WMVnauhtbudlQV8cq+MH2FXouaPYG8327fDA85TzerLhj0ONyppK0uiR2bscrMmyftyLV1wba610spjDMo0gvGo=
   on:
     tags: true
-    node: 5
+    node: 7
