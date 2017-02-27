@@ -10,7 +10,7 @@ require("./support/unhandledRejection");
 
 chai.use(chaiFs);
 
-describe("extractLoader", () => {
+describe("extricateLoader", () => {
     afterEach(() => {
         rimRaf.sync(path.resolve(__dirname, "dist"));
     });

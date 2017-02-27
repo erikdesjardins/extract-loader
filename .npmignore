@@ -1,20 +1,4 @@
-lib-cov
-*.seed
-*.log
-*.csv
-*.dat
-*.out
-*.pid
-*.gz
+# Everything
+*
 
-pids
-logs
-results
-
-npm-debug.log
-node_modules
-coverage
-examples
-test
-assets
-.idea
+!index.js

@@ -17,7 +17,7 @@ const loaderUtils = require("loader-utils");
  * Random placeholder. Marks the location in the source code where the result of other modules should be inserted.
  * @type {string}
  */
-const rndPlaceholder = "__EXTRACT_LOADER_PLACEHOLDER_" + String(Math.random()).slice(2) + "__";
+const rndPlaceholder = "__EXTRICATE_LOADER_PLACEHOLDER_" + String(Math.random()).slice(2) + "__";
 
 /**
  * Executes the given module's src in a fake context in order to get the resulting string.
@@ -26,7 +26,7 @@ const rndPlaceholder = "__EXTRACT_LOADER_PLACEHOLDER_" + String(Math.random()).s
  * @throws Error
  * @param {string} content the module's src
  */
-function extractLoader(content) {
+function extricateLoader(content) {
     const callback = this.async();
     const dependencies = [];
     const script = new vm.Script(content, {
@@ -106,4 +106,4 @@ function runModule(src, filename, publicPath = "") {
     return sandbox.module.exports.toString();
 }
 
-module.exports = extractLoader;
+module.exports = extricateLoader;

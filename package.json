@@ -2,7 +2,7 @@
   "name": "extricate-loader",
   "version": "0.0.2",
   "description": "Webpack loader to extract content from the bundle.",
-  "main": "src/extractLoader.js",
+  "main": "index.js",
   "scripts": {
     "test": "mocha -R spec"
   },

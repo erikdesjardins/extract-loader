@@ -1,6 +1,8 @@
 const webpack = require("webpack");
 const path = require("path");
 
+const extricateLoader = path.join(__dirname, "../../index.js");
+
 module.exports = function ({ testModule, publicPath }) {
     return new Promise((resolve, reject) => {
         webpack({
@@ -24,14 +26,14 @@ module.exports = function ({ testModule, publicPath }) {
                         use: [
                             // appending -dist so we can check if url rewriting is working
                             { loader: "file-loader", options: { name: "[name]-dist.[ext]" } },
-                            { loader: path.join(__dirname, "../../lib/extractLoader.js") },
+                            { loader: extricateLoader },
                         ]
                     },
                     {
                         test: /\.html$/,
                         use: [
                             { loader: "file-loader", options: { name: "[name]-dist.[ext]" } },
-                            { loader: path.join(__dirname, "../../lib/extractLoader.js"), options: {
+                            { loader: extricateLoader, options: {
                                 // nonsense that should never match, ensures that merely the existence of regex
                                 // is not enough to cause the usage of Node's native `require()`
                                 resolve: "$^foobar^$"
@@ -43,7 +45,7 @@ module.exports = function ({ testModule, publicPath }) {
                         test: /\.css$/,
                         use: [
                             { loader: "file-loader", options: { name: "[name]-dist.[ext]" } },
-                            { loader: path.join(__dirname, "../../lib/extractLoader.js"), options: {
+                            { loader: extricateLoader, options: {
                                 resolve: "\\.js$"
                             } },
                             { loader: "css-loader" }
