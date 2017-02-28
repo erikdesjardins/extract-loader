@@ -19,7 +19,7 @@ This is necessary for `css-loader` to work, since it requires a helper module.
 
 ### Examples
 
-All `.js` files: `extricate?resolve=\\.js$`
+All `.js` files: `extricate-loader?resolve=\\.js$`
 
 ## Example Usage
 
@@ -28,11 +28,25 @@ All `.js` files: `extricate?resolve=\\.js$`
 module.exports = {
   entry: 'manifest.json',
   module: {
-    loaders: [
-      { test: /\.json$/, loaders: ['file?name=[name].[ext]', 'extricate', 'interpolate'] },
-      { test: /\.js$/, loader: 'entry' },
-      { test: /\.css$/, loaders: ['file', 'extricate?resolve=\\.js$', 'css'] },
-      { test: /\.png$/, loader: 'file' }
+    rules: [
+      {
+        test: /\.json$/,
+        use: [
+          { loader: 'file-loader', options: { name: '[name].[ext]' } },
+          { loader: 'extricate-loader' },
+          { loader: 'interpolate-loader' }
+        ]
+      },
+      {
+        test: /\.css$/,
+        use: [
+          { loader: 'file-loader' },
+          { loader: 'extricate-loader', options: { resolve: '\\.js$' } },
+          { loader: 'css-loader' }
+        ]
+      },
+      { test: /\.js$/, use: ['entry-loader'] },
+      { test: /\.png$/, use: ['file-loader'] }
     ]
   }
   // ...
