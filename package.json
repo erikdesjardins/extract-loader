@@ -21,22 +21,22 @@
   },
   "homepage": "https://github.com/erikdesjardins/extricate-loader#readme",
   "peerDependencies": {
-    "webpack": ">=2.2.0"
+    "webpack": ">=3.0.0"
   },
   "devDependencies": {
-    "chai": "^3.5.0",
+    "chai": "^4.1.0",
     "chai-fs": "^1.0.0",
-    "coveralls": "^2.11.16",
-    "css-loader": "^0.26.2",
-    "file-loader": "^0.10.1",
+    "coveralls": "^2.13.1",
+    "css-loader": "^0.28.4",
+    "file-loader": "^0.11.2",
     "html-loader": "^0.4.5",
-    "mocha": "^3.2.0",
-    "nyc": "^10.1.2",
+    "mocha": "^3.4.2",
+    "nyc": "^11.0.3",
     "rimraf": "^2.6.1",
-    "style-loader": "^0.13.2",
-    "webpack": "^2.2.1"
+    "style-loader": "^0.18.2",
+    "webpack": "^3.3.0"
   },
   "dependencies": {
-    "loader-utils": "^1.0.2"
+    "loader-utils": "^1.1.0"
   }
 }
