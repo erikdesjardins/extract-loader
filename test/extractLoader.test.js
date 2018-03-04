@@ -97,7 +97,7 @@ describe('extricateLoader', () => {
     it('should track all dependencies', () =>
         compile({ testModule: 'stylesheet.html' }).then((stats) => {
             const basePath = path.dirname(__dirname); // returns the parent dirname
-            const dependencies = stats.compilation.fileDependencies.map(
+            const dependencies = Array.from(stats.compilation.fileDependencies.values()).map(
                 (dependency) => dependency.slice(basePath.length)
             );
 
