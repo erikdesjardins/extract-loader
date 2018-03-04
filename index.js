@@ -31,7 +31,7 @@ function extricateLoader(content) {
                         try {
                             // run the imported module to get its (string) export
                             var result = runScript(src, resourcePath, {
-                                __webpack_public_path__: this.options.output.publicPath || ''
+                                __webpack_public_path__: this._compilation.options.output.publicPath || ''
                             });
                             resolve(result);
                         } catch (e) {
