@@ -1,4 +1,4 @@
-# extricate-loader [![Build Status](https://travis-ci.org/erikdesjardins/extricate-loader.svg?branch=master)](https://travis-ci.org/erikdesjardins/extricate-loader) [![Coverage Status](https://coveralls.io/repos/github/erikdesjardins/extricate-loader/badge.svg?branch=master)](https://coveralls.io/github/erikdesjardins/extricate-loader?branch=master)
+# extricate-loader
 
 Webpack loader to extract content from the bundle.
 
